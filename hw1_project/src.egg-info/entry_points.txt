@@ -1,0 +1,4 @@
+[console_scripts]
+launch_data_loader = src.data.data_loader:main
+make_synthetic_data = tests.make_synthetic_data:main
+

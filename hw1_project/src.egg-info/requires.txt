@@ -1,0 +1,2 @@
+kaggle~=1.5.12
+setuptools~=60.2.0
