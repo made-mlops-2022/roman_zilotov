@@ -1,11 +1,12 @@
-FROM python:3.8.15
-COPY main.py run.sh requirements.txt ./online_inference/
+FROM python:3.8.15-slim-buster
+COPY app_execution.sh tests_execution.sh requirements.txt ./online_inference/
+COPY ./app ./online_inference/app
 
 WORKDIR /online_inference
 
-RUN python3 -m pip install --upgrade pip
-RUN pip3 install -r requirements.txt
+RUN python3 -m pip install --upgrade pip \
+    && pip3 install -r requirements.txt
 
 EXPOSE 8000
 
-CMD ["bash", "run.sh"]
+CMD ["bash", "app_execution.sh"]
