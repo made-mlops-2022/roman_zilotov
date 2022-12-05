@@ -42,10 +42,10 @@ with DAG(
     )
 
     validate = DockerOperator(
-        image='airflow-airflow-validate',
-        command='--input-dir /data/splitted/{{ ds }} --input-model-dir /data/models/{{ ds }} --output-metrics-dir /data/metrics/{{ ds }}',
+        image='airflow-validate',
+        command='--input-dir /data/processed/{{ ds }} --input-model-dir /data/models/{{ ds }} --output-metrics-dir /data/metrics/{{ ds }}',
         network_mode='host',
-        task_id='docker-airflow-airflow-validate',
+        task_id='docker-airflow-validate',
         do_xcom_push=False,
         auto_remove=True,
         mounts=[Mount(source=LOCAL_DATA_DIR, target='/data', type='bind')]

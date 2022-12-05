@@ -13,14 +13,13 @@ PROCESSED_DATASET_TRAIN_NAME = 'data_processed.csv'
 def predict(input_dir, input_model_dir, output_dir):
     os.makedirs(output_dir, exist_ok=True)
 
-    X = pd.read_csv(os.path.join(input_dir, PROCESSED_DATASET_TRAIN_NAME))
-    with open(os.path.join(input_model_dir, 'model.pkl')) as f:
+    data_processed = pd.read_csv(os.path.join(input_dir, PROCESSED_DATASET_TRAIN_NAME))
+    with open(os.path.join(input_model_dir, 'model.pkl'), 'rb') as f:
         model = pickle.load(f)
-    y_pred = model.predict(X)
-    pd.DataFrame(y_pred).to_csv(os.path.join(output_dir, 'predictions.csv'), index=False)
+    predictions = model.predict(data_processed.drop(columns='condition'))
     with open(os.path.join(output_dir, 'predictions.txt'), 'w') as f:
-        for elem in y_pred:
-            f.writelines(f'{elem}\r\n')
+        for prediction in predictions:
+            f.writelines(f'{prediction}\r\n')
 
 
 if __name__ == '__main__':

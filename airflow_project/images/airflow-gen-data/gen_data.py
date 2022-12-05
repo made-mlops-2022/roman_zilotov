@@ -7,7 +7,10 @@ from DataSynthesizer.lib.utils import display_bayesian_network
 INPUT_DATASET_NAME = 'origin_data.csv'
 OUTPUT_DATASET_NAME = 'data.csv'
 OUTPUT_DATASET_DESCRIPTION_NAME = 'description.json'
-THRESHOLD = 7
+THRESHOLD = 5
+EPS = 1
+DEGREE_OF_BAYESIAN_NETWORK = 2
+GEN_DATA_SIZE = 200
 CATEGORICAL_ATTRIBUTES = {
     'sex': True,
     'cp': True,
@@ -17,9 +20,6 @@ CATEGORICAL_ATTRIBUTES = {
     'ca': True,
     'thal': True
 }
-EPS = 1
-DEGREE_OF_BAYESIAN_NETWORK = 2
-GEN_DATA_SIZE = 250
 
 
 @click.command('gen')
@@ -27,7 +27,7 @@ GEN_DATA_SIZE = 250
 def gen_data(output_dir) -> None:
     os.makedirs(output_dir, exist_ok=True)
 
-    path_to_data = os.path.join(output_dir, OUTPUT_DATASET_NAME)
+    path_to_output_data = os.path.join(output_dir, OUTPUT_DATASET_NAME)
 
     describer = DataDescriber(category_threshold=THRESHOLD)
     describer.describe_dataset_in_correlated_attribute_mode(
@@ -40,7 +40,7 @@ def gen_data(output_dir) -> None:
     display_bayesian_network(describer.bayesian_network)
     generator = DataGenerator()
     generator.generate_dataset_in_correlated_attribute_mode(GEN_DATA_SIZE, OUTPUT_DATASET_DESCRIPTION_NAME)
-    generator.save_synthetic_data(OUTPUT_DATASET_NAME)
+    generator.save_synthetic_data(path_to_output_data)
     os.remove(OUTPUT_DATASET_DESCRIPTION_NAME)
 
 

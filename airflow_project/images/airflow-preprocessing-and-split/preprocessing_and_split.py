@@ -25,13 +25,13 @@ def preprocessing_and_split(input_dir, output_dir):
 
     if RANDOM_STATE_CONST == -1:
         X_train, X_val, y_train, y_val = train_test_split(
-            processed_data.drop(columns = 'condition'),
+            processed_data.drop(columns='condition'),
             processed_data['condition'],
             test_size=0.3
         )
     else:
         X_train, X_val, y_train, y_val = train_test_split(
-            processed_data.drop(columns = 'condition'),
+            processed_data.drop(columns='condition'),
             processed_data['condition'],
             test_size=0.3,
             random_state=RANDOM_STATE_CONST

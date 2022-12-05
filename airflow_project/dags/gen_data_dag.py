@@ -1,11 +1,12 @@
 from airflow import DAG
 from airflow.providers.docker.operators.docker import DockerOperator
 from docker.types import Mount
+
 from parameters import LOCAL_DATA_DIR, DEFAULT_ARGS, START_DATE
 
 
 with DAG(
-    'gen',
+    'gen_data',
     default_args=DEFAULT_ARGS,
     schedule_interval='@daily',
     start_date=START_DATE

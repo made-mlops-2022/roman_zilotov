@@ -2,7 +2,7 @@ from airflow import DAG
 from airflow.providers.docker.operators.docker import DockerOperator
 from airflow.sensors.python import PythonSensor
 from docker.types import Mount
-from parameters import LOCAL_DATA_DIR, DEFAULT_ARGS, check_file, START_DATE
+from parameters import LOCAL_DATA_DIR, DEFAULT_ARGS, check_file, START_DATE, CUR_MODEL_DATE
 
 
 with DAG(
@@ -33,7 +33,9 @@ with DAG(
 
     predict = DockerOperator(
         image='airflow-predict',
-        command='--input-dir /data/processed/{{ ds }} --output-dir /data/predictions/{{ ds }}',
+        command='--input-dir /data/processed/{{ ds }} '
+                f'--input-model-dir /data/models/{CUR_MODEL_DATE} '
+                '--output-dir /data/predictions/{{ ds }}',
         network_mode='host',
         task_id='docker-airflow-predict',
         do_xcom_push=False,
