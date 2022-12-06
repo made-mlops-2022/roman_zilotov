@@ -1,0 +1,9 @@
+hw1_project/data
+build/
+outputs/
+hw1_project/outputs/
+hw1_project/build/
+hw1_project/src.egg-info/
+hw1_project/venv
+.idea
+:memory
